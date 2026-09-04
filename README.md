@@ -1,11 +1,9 @@
 # CoreChem
 
-CoreChem trading and materials website work, project notes, and reference documents.
+Production-only source for the CoreChem static website.
 
-## Contents
+- `site/hanbit-materials/` contains the deployable homepage and assets.
+- `.github/workflows/pages.yml` publishes that directory to GitHub Pages.
+- Research, project notes, Vista documents, and working references stay local and are not tracked here.
 
-- `site/hanbit-materials/` — website concept and assets
-- `docs/` — CoreChem project and design documents
-- `reference/` — working reference material
-
-Temporary build output, local caches, credentials, and personal settings are intentionally excluded.
+Live site: https://muzholiq.github.io/corechem/
