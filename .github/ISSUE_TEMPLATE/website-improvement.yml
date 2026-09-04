@@ -1,0 +1,20 @@
+name: Website improvement
+description: Suggest a verified content, UX, accessibility, or visual improvement.
+title: "[WEB] "
+labels:
+  - website
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: Request
+      description: Describe the change and why it is needed.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Describe how the completed change should be checked.
+    validations:
+      required: true

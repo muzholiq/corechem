@@ -1,0 +1,29 @@
+name: Product information
+description: Add verified product, grade, supplier, or document information.
+title: "[PRODUCT] "
+labels:
+  - product-data
+body:
+  - type: input
+    id: material
+    attributes:
+      label: Material
+      description: PCTFE, PTFE, PEEK, PFA, FEP, or PTFE Powder (Resin).
+      placeholder: PTFE
+    validations:
+      required: true
+  - type: textarea
+    id: verified-details
+    attributes:
+      label: Verified details
+      description: Add only confirmed grades, forms, manufacturers, applications, or supply conditions.
+      placeholder: Grade, form, manufacturer, application, etc.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: Link to the TDS, SDS, manufacturer page, or other source.
+    validations:
+      required: true
