@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://muzholiq.github.io/corechem/sitemap.xml
