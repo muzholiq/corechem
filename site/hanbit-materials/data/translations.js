@@ -33,3 +33,6 @@ Object.assign(window.CORECHEM_I18N.ja,{typeMaterial:'半製品素材 RFQ',typeMa
 Object.assign(window.CORECHEM_I18N.ko,{heroTitle:'반도체 장비용 소재와<br>Machined Parts를 연결합니다.',heroLead:'PCTFE, PTFE, PEEK, PFA를 중심으로 반도체 공정·장비 검토에 필요한 정보와 공급 문의를 한곳에 연결합니다.',statusReference:'파트너 레퍼런스 범위'});
 Object.assign(window.CORECHEM_I18N.en,{heroTitle:'Materials and Machined Parts<br>for semiconductor equipment.',heroLead:'Connect PCTFE, PTFE, PEEK, and PFA review with semiconductor equipment requirements and supply enquiry.',statusReference:'Partner reference scope'});
 Object.assign(window.CORECHEM_I18N.ja,{heroTitle:'半導体装置向け素材と<br>Machined Partsをつなぎます。',heroLead:'PCTFE、PTFE、PEEK、PFAを中心に、半導体工程・装置の検討情報と供給のお問い合わせを一か所につなぎます。',statusReference:'パートナー公開資料の範囲'});
+Object.assign(window.CORECHEM_I18N.ko,{dimensions:'치수 (선택)'});
+Object.assign(window.CORECHEM_I18N.en,{dimensions:'Dimensions (optional)'});
+Object.assign(window.CORECHEM_I18N.ja,{dimensions:'寸法（任意）'});
