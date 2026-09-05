@@ -50,6 +50,7 @@
   }
   function renderMachined() {
     document.querySelector('#machinedGrid').innerHTML=machined.categories.map(item=>{const copy=item.copy[state.lang];return `<article class="machined-card"><span class="solution-code">${item.code}</span><span class="machined-icon">${item.icon}</span><span class="claim-status ${item.status}">${t(item.status==='reference'?'statusReference':'statusPartnerReview')}</span><h3>${copy.title}</h3><p>${copy.text}</p><button type="button" data-machined-inquiry>${t('machinedInquiry')} →</button></article>`}).join('');
+    document.querySelector('#semiconductorFocus').innerHTML=machined.semiconductorFocus.map(item=>{const copy=item.copy[state.lang];return `<article class="focus-card"><span class="solution-code">${item.code}</span><span class="machined-icon">${item.icon}</span><h3>${copy.title}</h3><p>${copy.text}</p></article>`}).join('');
     document.querySelectorAll('[data-machined-inquiry]').forEach(button=>button.addEventListener('click',()=>{state.inquiry.type='machined';state.inquiry.material='';renderInquiry();document.querySelector('#inquiry').scrollIntoView();}));
   }
   function renderFooter() {
