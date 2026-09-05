@@ -7,3 +7,4 @@ window.CORECHEM_MACHINED_PARTS = {
     {id:'drawing', code:'MP-04', icon:'DRAWING', copy:{ko:{title:'도면 기반 부품',text:'도면·치수표를 바탕으로 파트너 공급 가능성과 필요한 소재를 함께 확인합니다.'},en:{title:'Drawing-based parts',text:'Share a drawing or dimension sheet so partner supply feasibility and material can be reviewed.'},ja:{title:'図面ベースの部品',text:'図面・寸法表をもとに、パートナー供給の可否と素材を一緒に確認します。'}}}
   ]
 };
+window.CORECHEM_MACHINED_PARTS.categories.forEach(item=>{item.status=item.id==='drawing'?'partner-review':'reference';});
