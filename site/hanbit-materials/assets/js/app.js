@@ -2,6 +2,7 @@
   const site = window.CORECHEM_SITE;
   const materials = window.CORECHEM_MATERIALS;
   const flow = window.CORECHEM_FLOW;
+  const machined = window.CORECHEM_MACHINED_PARTS;
   const i18n = window.CORECHEM_I18N;
   const state = { lang: chooseLanguage(), material: chooseMaterial(), inquiry:{type:'product',material:'',formGrade:'',quantity:'',application:'',delivery:'',company:'',name:'',email:''} };
 
@@ -46,6 +47,10 @@
     const material = currentMaterial(); const copy = material.copy[state.lang];
     document.querySelector('#materialStage').innerHTML = `<div class="material-stage-grid"><div><div class="material-title-row"><div><span class="material-full">${material.fullName}</span><h3>${material.name}</h3></div><span class="material-badge">${t(material.priority)}</span></div><p class="material-summary">${copy.summary}</p><div class="material-actions"><a class="button primary" href="#inquiry" data-material-inquiry="${material.id}">${t('requestMaterial')}</a><a class="button quiet" href="#documents">${t('requestDocuments')}</a></div></div><div class="material-data"><div class="data-block"><h4>${t('properties')}</h4><ul>${copy.properties.map(value => `<li>${value}</li>`).join('')}</ul></div><div class="data-block"><h4>${t('applications')}</h4><ul>${copy.applications.map(value => `<li>${value}</li>`).join('')}</ul></div><div class="data-block"><h4>${t('forms')}</h4><ul>${copy.forms.map(value => `<li>${value}</li>`).join('')}</ul></div><div class="data-block"><h4>${t('reviewNote')}</h4><p>${copy.note}</p></div></div></div>`;
     document.querySelector('[data-material-inquiry]').addEventListener('click',()=>{state.inquiry.type='product';state.inquiry.material=material.id;renderInquiry();});
+  }
+  function renderMachined() {
+    document.querySelector('#machinedGrid').innerHTML=machined.categories.map(item=>{const copy=item.copy[state.lang];return `<article class="machined-card"><span class="solution-code">${item.code}</span><span class="machined-icon">${item.icon}</span><h3>${copy.title}</h3><p>${copy.text}</p><button type="button" data-machined-inquiry>${t('machinedInquiry')} →</button></article>`}).join('');
+    document.querySelectorAll('[data-machined-inquiry]').forEach(button=>button.addEventListener('click',()=>{state.inquiry.type='partner';state.inquiry.material='';renderInquiry();document.querySelector('#inquiry').scrollIntoView();}));
   }
   function renderFooter() {
     const contact = site.contact;
@@ -105,7 +110,7 @@
     try { await navigator.clipboard.writeText(value); status.textContent=t('copied'); }
     catch { const area=document.createElement('textarea');area.value=value;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();status.textContent=t(ok?'copied':'copyFailed'); }
   }
-  function renderAll() { renderTabs(); renderMaterial(); renderComparison(); renderSolutions(); renderDocuments(); renderProcess(); renderCompany(); renderInquiry(); renderFooter(); }
+  function renderAll() { renderTabs(); renderMaterial(); renderMachined(); renderComparison(); renderSolutions(); renderDocuments(); renderProcess(); renderCompany(); renderInquiry(); renderFooter(); }
   function selectMaterial(id) {
     state.material = id; const url = new URL(location.href); url.searchParams.set('material', id); url.searchParams.set('lang', state.lang); history.replaceState({}, '', url); renderTabs(); renderMaterial(); renderComparison();
   }
