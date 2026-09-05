@@ -36,6 +36,9 @@ Object.assign(window.CORECHEM_I18N.ja,{heroTitle:'半導体装置向け素材と
 Object.assign(window.CORECHEM_I18N.ko,{dimensions:'치수 (선택)'});
 Object.assign(window.CORECHEM_I18N.en,{dimensions:'Dimensions (optional)'});
 Object.assign(window.CORECHEM_I18N.ja,{dimensions:'寸法（任意）'});
+Object.assign(window.CORECHEM_I18N.ko,{partType:'부품 유형',temperature:'사용 온도',pressure:'사용 압력',media:'접촉 매체·약액·가스',documents:'필요한 문서'});
+Object.assign(window.CORECHEM_I18N.en,{partType:'Part type',temperature:'Operating temperature',pressure:'Operating pressure',media:'Contacted media, chemicals, or gas',documents:'Required documents'});
+Object.assign(window.CORECHEM_I18N.ja,{partType:'部品タイプ',temperature:'使用温度',pressure:'使用圧力',media:'接触媒体・薬液・ガス',documents:'必要な資料'});
 Object.assign(window.CORECHEM_I18N.ko,{scopeReferenceLabel:'PUBLISHED REFERENCE SCOPE',scopeReferenceTitle:'파트너 공개 자료를 기준으로 검토',scopeReferenceText:'씰링, 벨로즈, 슬라이딩 부품과 관련 소재를 우선 검토 범위로 안내합니다.',scopeEnquiryLabel:'CONFIRM PER ENQUIRY',scopeEnquiryTitle:'실제 공급 조건은 문의별 확인',scopeEnquiryText:'등급, 치수, 공차, 검사, 세정·포장과 납기는 파트너 확인 후 안내합니다.'});
 Object.assign(window.CORECHEM_I18N.en,{scopeReferenceLabel:'PUBLISHED REFERENCE SCOPE',scopeReferenceTitle:'Review against partner references',scopeReferenceText:'Sealing, bellows, sliding parts, and related materials are presented as the initial review scope.',scopeEnquiryLabel:'CONFIRM PER ENQUIRY',scopeEnquiryTitle:'Confirm supply conditions per enquiry',scopeEnquiryText:'Grades, dimensions, tolerances, inspection, cleaning, packaging, and lead time are confirmed with partners.'});
 Object.assign(window.CORECHEM_I18N.ja,{scopeReferenceLabel:'PUBLISHED REFERENCE SCOPE',scopeReferenceTitle:'パートナー公開資料を基準に検討',scopeReferenceText:'シール、ベローズ、摺動部品と関連素材を初期の検討範囲としてご案内します。',scopeEnquiryLabel:'CONFIRM PER ENQUIRY',scopeEnquiryTitle:'供給条件は問い合わせごとに確認',scopeEnquiryText:'グレード、寸法、公差、検査、洗浄・包装、納期はパートナーと確認します。'});
