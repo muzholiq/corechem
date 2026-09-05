@@ -4,7 +4,7 @@
   const flow = window.CORECHEM_FLOW;
   const machined = window.CORECHEM_MACHINED_PARTS;
   const i18n = window.CORECHEM_I18N;
-  const state = { lang: chooseLanguage(), material: chooseMaterial(), inquiry:{type:'product',material:'',formGrade:'',quantity:'',application:'',delivery:'',company:'',name:'',email:''} };
+  const state = { lang: chooseLanguage(), material: chooseMaterial(), inquiry:{type:'material',material:'',formGrade:'',quantity:'',application:'',delivery:'',company:'',name:'',email:'',drawing:'',critical:''} };
 
   function chooseLanguage() {
     const requested = new URLSearchParams(location.search).get('lang');
@@ -46,11 +46,11 @@
   function renderMaterial() {
     const material = currentMaterial(); const copy = material.copy[state.lang];
     document.querySelector('#materialStage').innerHTML = `<div class="material-stage-grid"><div><div class="material-title-row"><div><span class="material-full">${material.fullName}</span><h3>${material.name}</h3></div><span class="material-badge">${t(material.priority)}</span></div><p class="material-summary">${copy.summary}</p><div class="material-actions"><a class="button primary" href="#inquiry" data-material-inquiry="${material.id}">${t('requestMaterial')}</a><a class="button quiet" href="#documents">${t('requestDocuments')}</a></div></div><div class="material-data"><div class="data-block"><h4>${t('properties')}</h4><ul>${copy.properties.map(value => `<li>${value}</li>`).join('')}</ul></div><div class="data-block"><h4>${t('applications')}</h4><ul>${copy.applications.map(value => `<li>${value}</li>`).join('')}</ul></div><div class="data-block"><h4>${t('forms')}</h4><ul>${copy.forms.map(value => `<li>${value}</li>`).join('')}</ul></div><div class="data-block"><h4>${t('reviewNote')}</h4><p>${copy.note}</p></div></div></div>`;
-    document.querySelector('[data-material-inquiry]').addEventListener('click',()=>{state.inquiry.type='product';state.inquiry.material=material.id;renderInquiry();});
+    document.querySelector('[data-material-inquiry]').addEventListener('click',()=>{state.inquiry.type='material';state.inquiry.material=material.id;renderInquiry();});
   }
   function renderMachined() {
     document.querySelector('#machinedGrid').innerHTML=machined.categories.map(item=>{const copy=item.copy[state.lang];return `<article class="machined-card"><span class="solution-code">${item.code}</span><span class="machined-icon">${item.icon}</span><h3>${copy.title}</h3><p>${copy.text}</p><button type="button" data-machined-inquiry>${t('machinedInquiry')} →</button></article>`}).join('');
-    document.querySelectorAll('[data-machined-inquiry]').forEach(button=>button.addEventListener('click',()=>{state.inquiry.type='partner';state.inquiry.material='';renderInquiry();document.querySelector('#inquiry').scrollIntoView();}));
+    document.querySelectorAll('[data-machined-inquiry]').forEach(button=>button.addEventListener('click',()=>{state.inquiry.type='machined';state.inquiry.material='';renderInquiry();document.querySelector('#inquiry').scrollIntoView();}));
   }
   function renderFooter() {
     const contact = site.contact;
@@ -82,15 +82,15 @@
     document.querySelector('#companyFacts').innerHTML=flow.companyFacts.map(item=>`<div><dt>${item.label[state.lang]}</dt><dd>${item.value[state.lang]}</dd></div>`).join('');
   }
   function renderInquiry() {
-    const q=state.inquiry;
+    const q=state.inquiry; const machiningFields=q.type==='machined'?`<label class="field">${label('drawingAvailability')}<select name="drawing"><option value="">${t('notSure')}</option><option value="yes" ${q.drawing==='yes'?'selected':''}>${t('drawingAttached')}</option><option value="later" ${q.drawing==='later'?'selected':''}>${t('drawingLater')}</option></select></label><label class="field">${label('criticalRequirement')}<input name="critical" value="${escapeHTML(q.critical)}"></label>`:'';
     const label=(key,required=false)=>`<span class="field-label"><span>${t(key)}</span><small>${t(required?'required':'optional')}</small></span>`;
     document.querySelector('#inquiryBuilder').innerHTML=`<form class="inquiry-form" id="inquiryForm"><div class="form-grid">
-      <label class="field wide">${label('inquiryType',true)}<select name="type"><option value="product" ${q.type==='product'?'selected':''}>${t('typeProduct')}</option><option value="documents" ${q.type==='documents'?'selected':''}>${t('typeDocuments')}</option><option value="partner" ${q.type==='partner'?'selected':''}>${t('typePartner')}</option></select></label>
+      <label class="field wide">${label('inquiryType',true)}<select name="type"><option value="material" ${q.type==='material'?'selected':''}>${t('typeMaterial')}</option><option value="machined" ${q.type==='machined'?'selected':''}>${t('typeMachined')}</option><option value="documents" ${q.type==='documents'?'selected':''}>${t('typeDocuments')}</option><option value="partner" ${q.type==='partner'?'selected':''}>${t('typePartner')}</option></select></label>
       <label class="field wide">${label('interestMaterial')}<select name="material"><option value="">${t('notSure')}</option>${materials.map(item=>`<option value="${item.id}" ${q.material===item.id?'selected':''}>${item.name} — ${item.fullName}</option>`).join('')}</select></label>
       <label class="field">${label('formGrade')}<input name="formGrade" value="${escapeHTML(q.formGrade)}"></label><label class="field">${label('quantity')}<input name="quantity" value="${escapeHTML(q.quantity)}"></label>
-      <label class="field wide">${label('applicationRequirement')}<textarea name="application">${escapeHTML(q.application)}</textarea></label><label class="field wide">${label('delivery')}<input name="delivery" value="${escapeHTML(q.delivery)}"></label>
+      <label class="field wide">${label('applicationRequirement')}<textarea name="application">${escapeHTML(q.application)}</textarea></label>${machiningFields}<label class="field wide">${label('delivery')}<input name="delivery" value="${escapeHTML(q.delivery)}"></label>
       <label class="field">${label('companyName')}<input name="company" value="${escapeHTML(q.company)}"></label><label class="field">${label('contactName',true)}<input name="name" value="${escapeHTML(q.name)}" required></label><label class="field wide">${label('replyEmail',true)}<input name="email" type="email" value="${escapeHTML(q.email)}" required></label>
-      </div><div class="inquiry-actions"><button class="main-action" type="submit">${t('openMail')} →</button><button type="button" data-copy-summary>${t('copySummary')}</button><button type="button" data-copy-address>${t('copyAddress')}</button></div><p class="privacy-note">${t('privacyNote')}</p>${site.draftMode?`<p class="draft-email-note">${t('draftEmailNote')}</p>`:''}<p class="form-status" role="status" aria-live="polite"></p></form>`;
+      </div><div class="inquiry-actions"><button class="main-action" type="submit">${t('openMail')} →</button><button type="button" data-copy-summary>${t('copySummary')}</button><button type="button" data-copy-address>${t('copyAddress')}</button></div><p class="privacy-note">${t('privacyNote')}</p>${q.type==='machined'?`<p class="drawing-note">${t('mailAttachmentNote')}</p>`:''}${site.draftMode?`<p class="draft-email-note">${t('draftEmailNote')}</p>`:''}<p class="form-status" role="status" aria-live="polite"></p></form>`;
     const form=document.querySelector('#inquiryForm');
     form.addEventListener('input',event=>{if(event.target.name)state.inquiry[event.target.name]=event.target.value;});
     form.addEventListener('submit',event=>{event.preventDefault();if(!form.reportValidity())return;saveInquiry(form);location.href=makeMailto();});
@@ -98,13 +98,13 @@
     form.querySelector('[data-copy-address]').addEventListener('click',async()=>copyText(site.contact.email));
   }
   function saveInquiry(form) { new FormData(form).forEach((value,key)=>{state.inquiry[key]=String(value).trim();}); }
-  function inquiryTypeLabel() { return t({product:'typeProduct',documents:'typeDocuments',partner:'typePartner'}[state.inquiry.type]); }
+  function inquiryTypeLabel() { return t({material:'typeMaterial',machined:'typeMachined',documents:'typeDocuments',partner:'typePartner'}[state.inquiry.type]); }
   function buildSummary() {
     const q=state.inquiry; const material=materials.find(item=>item.id===q.material)?.name||t('notSure');
-    const labels=[['inquiryType',inquiryTypeLabel()],['interestMaterial',material],['formGrade',q.formGrade],['quantity',q.quantity],['applicationRequirement',q.application],['delivery',q.delivery],['companyName',q.company],['contactName',q.name],['replyEmail',q.email]];
+    const labels=[['inquiryType',inquiryTypeLabel()],['interestMaterial',material],['formGrade',q.formGrade],['quantity',q.quantity],['applicationRequirement',q.application]]; if(q.type==='machined')labels.push(['drawingAvailability',q.drawing],['criticalRequirement',q.critical]); labels.push(['delivery',q.delivery],['companyName',q.company],['contactName',q.name],['replyEmail',q.email]);
     return labels.map(([key,value])=>`${t(key)}: ${value||'-'}`).join('\n');
   }
-  function makeMailto() { const subjects={product:'mailSubjectProduct',documents:'mailSubjectDocuments',partner:'mailSubjectPartner'};return `mailto:${site.contact.email}?subject=${encodeURIComponent(t(subjects[state.inquiry.type]))}&body=${encodeURIComponent(buildSummary())}`; }
+  function makeMailto() { const subjects={material:'mailSubjectMaterial',machined:'mailSubjectMachined',documents:'mailSubjectDocuments',partner:'mailSubjectPartner'};return `mailto:${site.contact.email}?subject=${encodeURIComponent(t(subjects[state.inquiry.type]))}&body=${encodeURIComponent(buildSummary())}`; }
   async function copyText(value) {
     const status=document.querySelector('.form-status');
     try { await navigator.clipboard.writeText(value); status.textContent=t('copied'); }
